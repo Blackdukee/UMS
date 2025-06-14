@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  user-management-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      # Override the database connection string as needed for your environment
+      - ConnectionStrings__DefaultConnection=Server=localhost\\SQLEXPRESS;Database=UserManagementSystemDB;Trusted_Connection=True;TrustServerCertificate=True;
+
+    restart: always
