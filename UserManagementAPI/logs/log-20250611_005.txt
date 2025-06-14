@@ -1,7 +1,0 @@
-2025-06-11 18:00:55.581 +03:00 [ERR] Failed executing DbCommand (35,017ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
-DECLARE @result int;
-EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
-SELECT @result
-2025-06-11 18:01:09.644 +03:00 [ERR] An error occurred using the connection to database 'UserManagementSystemDB' on server 'LAPTOP-SJVUH3N3\SQLEXPRESS'.
-2025-06-11 18:02:29.269 +03:00 [WRN] No valid token provided or authentication failed.
-[18:36:20 WRN] Unauthorized request - no valid JWT token provided for path: /UMS/api/Auth/login

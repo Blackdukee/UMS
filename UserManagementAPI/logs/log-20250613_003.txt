@@ -1,0 +1,31 @@
+2025-06-13 16:21:52.343 +03:00 [INF] Skipping JWT validation for service with valid X-Service-Key: /api/v1/ums/auth/validate
+[16:24:32 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:25:33 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:25:59 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:28:48 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:29:07 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:30:46 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:31:21 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:32:21 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:33:15 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:34:46 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/refresh-token
+[16:35:00 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:38:20 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/register
+[16:38:44 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/login
+[16:56:49 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[16:57:13 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/refresh-token
+[16:57:29 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:10:57 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:11:26 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/refresh-token
+[17:11:45 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:21:48 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/login
+[17:23:54 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:27:54 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:29:07 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:29:27 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:31:43 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:33:21 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:33:29 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:33:29 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:34:35 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate
+[17:34:35 INF] Validated service request with X-Service-Key: /api/v1/ums/auth/validate

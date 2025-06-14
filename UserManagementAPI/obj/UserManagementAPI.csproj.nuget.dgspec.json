@@ -1,43 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\UserManagementAPI\\UserManagementAPI.csproj": {}
+    "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\UserManagementAPI\\UserManagementAPI.csproj": {}
   },
   "projects": {
-    "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\Application.csproj": {
+    "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\nourh\\.nuget\\packages\\",
-        "outputPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\obj\\",
+        "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\Brilliant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\nourh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Brilliant\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\Domain.csproj"
+              "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\Domain.csproj"
               },
-              "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\Utilities.csproj": {
-                "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\Utilities.csproj"
+              "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\Utilities.csproj": {
+                "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\Utilities.csproj"
               }
             }
           }
@@ -50,9 +43,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -65,6 +58,10 @@
             "FluentValidation": {
               "target": "Package",
               "version": "[11.11.0, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.70.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -95,33 +92,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\Domain.csproj": {
+    "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\nourh\\.nuget\\packages\\",
-        "outputPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Brilliant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\nourh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Brilliant\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -138,9 +128,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -161,47 +151,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\nourh\\.nuget\\packages\\",
-        "outputPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Brilliant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\nourh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Brilliant\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\Application.csproj": {
-                "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\Application.csproj"
+              "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\Application.csproj"
               },
-              "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Domain\\Domain.csproj"
+              "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Domain\\Domain.csproj"
               },
-              "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\Utilities.csproj": {
-                "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\Utilities.csproj"
+              "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\Utilities.csproj": {
+                "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\Utilities.csproj"
               }
             }
           }
@@ -214,9 +197,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -253,44 +236,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\UserManagementAPI\\UserManagementAPI.csproj": {
+    "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\UserManagementAPI\\UserManagementAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\UserManagementAPI\\UserManagementAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\UserManagementAPI\\UserManagementAPI.csproj",
         "projectName": "UserManagementAPI",
-        "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\UserManagementAPI\\UserManagementAPI.csproj",
-        "packagesPath": "C:\\Users\\nourh\\.nuget\\packages\\",
-        "outputPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\UserManagementAPI\\obj\\",
+        "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\UserManagementAPI\\UserManagementAPI.csproj",
+        "packagesPath": "C:\\Users\\Brilliant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\UserManagementAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\nourh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Brilliant\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\Application.csproj": {
-                "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Application\\Application.csproj"
+              "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Application\\Application.csproj"
               },
-              "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -303,9 +279,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -318,6 +294,10 @@
             "FluentValidation.AspNetCore": {
               "target": "Package",
               "version": "[11.3.0, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.70.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -387,33 +367,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\Utilities.csproj": {
+    "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\Utilities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\Utilities.csproj",
+        "projectUniqueName": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\Utilities.csproj",
         "projectName": "Utilities",
-        "projectPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\Utilities.csproj",
-        "packagesPath": "C:\\Users\\nourh\\.nuget\\packages\\",
-        "outputPath": "C:\\SeniorYear\\.Net\\C#_tasks\\CS_Projects\\UserManagementSystem\\Utilities\\obj\\",
+        "projectPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\Utilities.csproj",
+        "packagesPath": "C:\\Users\\Brilliant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Utilities\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\nourh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Brilliant\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -430,9 +403,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -441,6 +414,10 @@
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.70.0, )"
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
@@ -467,7 +444,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

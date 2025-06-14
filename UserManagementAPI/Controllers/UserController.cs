@@ -8,7 +8,7 @@ using Application.DTOs;
 
 namespace UserManagementAPI.Controllers
 {
-    [Route("UMS/api/User")]
+    [Route("api/v1/ums/user")]
     [ApiController]
     [Authorize]
     public class UserController : ControllerBase

@@ -1,9 +1,0 @@
-2025-06-11 18:36:20.689 +03:00 [WRN] Unauthorized request - no valid JWT token provided for path: /UMS/api/Auth/login
-[18:51:09 ERR] Failed executing DbCommand (35,039ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
-SELECT [MigrationId], [ProductVersion]
-FROM [__EFMigrationsHistory]
-ORDER BY [MigrationId];
-[18:51:44 ERR] Failed executing DbCommand (35,016ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
-DECLARE @result int;
-EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
-SELECT @result

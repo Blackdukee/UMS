@@ -6,7 +6,7 @@ using Application.DTOs;
 
 namespace UserManagementAPI.Controllers
 {
-    [Route("UMS/api/Admin")]
+    [Route("api/v1/ums/admin")]
     [ApiController]
     [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
