@@ -39,4 +39,4 @@ jobs:
           script: |
             cd /home/ubuntu/elearning-backend/UMS
             chmod +x deploy.sh
-            ./deploy.s
+            ./deploy.sh
