@@ -19,7 +19,7 @@ FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 # Ensure the app listens on port 80
-ENV ASPNETCORE_URLS=http://+:5003
+ENV ASPNETCORE_URLS=http://0.0.0.0:5003
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENTRYPOINT ["dotnet", "UserManagementAPI.dll"]
 RUN apt-get update && apt-get install -y libkrb5-3
