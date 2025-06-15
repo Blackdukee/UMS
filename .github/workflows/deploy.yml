@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Docker Hub Login
@@ -19,18 +19,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Generate Image Tag Timestamp
+      - name: Generate Timestamp
         run: echo "TIMESTAMP=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
-      - name: Build Docker Image
+      - name: Build and Push Docker Image
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ums:latest \
                        -t ${{ secrets.DOCKERHUB_USERNAME }}/ums:${{ env.TIMESTAMP }} .
-
-      - name: Push Docker Images
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ums:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ums:${{ env.TIMESTAMP }}
+          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/ums
 
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -42,4 +38,4 @@ jobs:
           script: |
             cd /home/ubuntu/elearning-backend/ums
             chmod +x deploy.sh
-            ./deploy.sh ${{ env.TIMESTAMP }}
+            ./deploy.sh

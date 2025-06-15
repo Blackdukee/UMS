@@ -7,7 +7,7 @@ EXPOSE 5003
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy project files
+# Copy project files first
 COPY ["UserManagementAPI/UserManagementAPI.csproj", "UserManagementAPI/"]
 COPY ["Application/Application.csproj", "Application/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
@@ -17,10 +17,9 @@ COPY ["Utilities/Utilities.csproj", "Utilities/"]
 # Restore dependencies
 RUN dotnet restore "UserManagementAPI/UserManagementAPI.csproj"
 
-# Copy full source
+# Copy remaining source code
 COPY . .
 
-# Publish the app
 WORKDIR "/src/UserManagementAPI"
 RUN dotnet publish "UserManagementAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
