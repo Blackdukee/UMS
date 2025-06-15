@@ -17,8 +17,10 @@ COPY ["Utilities/Utilities.csproj", "Utilities/"]
 # Restore dependencies
 RUN dotnet restore "UserManagementAPI/UserManagementAPI.csproj"
 
-# Copy full source and publish
+# Copy full source
 COPY . .
+
+# Publish the app
 WORKDIR "/src/UserManagementAPI"
 RUN dotnet publish "UserManagementAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
@@ -27,7 +29,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Environment setup and entrypoint
 ENV ASPNETCORE_URLS=http://+:5003
 ENV ASPNETCORE_ENVIRONMENT=Production
 
