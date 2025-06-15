@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "6TibtG66rPQ=",
+  "dgSpecHash": "h6P3eDQW0Ow=",
   "success": true,
   "projectFilePath": "C:\\Users\\Brilliant\\Desktop\\UMS\\UserManagmentAPI_MAHD_System\\Docs\\Docs.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Brilliant\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.17\\microsoft.netcore.app.ref.8.0.17.nupkg.sha512",
+    "C:\\Users\\Brilliant\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.17\\microsoft.windowsdesktop.app.ref.8.0.17.nupkg.sha512",
+    "C:\\Users\\Brilliant\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.17\\microsoft.aspnetcore.app.ref.8.0.17.nupkg.sha512"
+  ],
   "logs": []
 }
