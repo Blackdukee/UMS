@@ -8,8 +8,8 @@ services:
     ports:
       - "5003:5003"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      # Override the database connection string as needed for your environment
-      - ConnectionStrings__DefaultConnection=Server=localhost\\SQLEXPRESS;Database=UserManagementSystemDB;Trusted_Connection=True;TrustServerCertificate=True;
-
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5003
+      # Dummy connection string for dev/test — avoid actual DB dependency
+      - ConnectionStrings__DefaultConnection=Server=dummy;Database=dummy;User Id=dummy;Password=dummy;
     restart: always
