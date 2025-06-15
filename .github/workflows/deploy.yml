@@ -37,7 +37,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           envs: DOCKERHUB_USERNAME
           script: |
-            cd ~/elearning-backend/UMS
+            cd /home/ubuntu/elearning-backend/UMS
             chmod +x deploy1.sh
             ./deploy1.sh
 
