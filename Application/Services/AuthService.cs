@@ -16,9 +16,11 @@ namespace Application.Services
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IGoogleAuthService _googleAuthService;
 
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IUserRepository userRepository, IGoogleAuthService googleAuthService)
         {
+            _googleAuthService = googleAuthService;
             _userRepository = userRepository;
         }
 
@@ -36,7 +38,7 @@ namespace Application.Services
                 LastName = dto.LastName,
                 Email = dto.Email,
                 PasswordHash = PasswordHelper.HashPassword(dto.Password),
-                Role = "Student"
+                Role = dto.Role,
             };
 
             await _userRepository.AddAsync(user);
@@ -51,6 +53,43 @@ namespace Application.Services
                 throw new UnauthorizedAccessException("Invalid credentials. Please check your email or password.");
             }
 
+            var accessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(15));
+            var refreshToken = GenerateRefreshToken();
+            await _userRepository.StoreRefreshTokenAsync(user.Id, refreshToken, DateTime.UtcNow.AddDays(7));
+
+            return new LoginResponseDto
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            };
+        }
+
+        public async Task<LoginResponseDto> LoginWithGoogleAsync(GoogleLoginDto googleLoginDto)
+        {
+            // Verify Google token
+            var (success, name, email) = await _googleAuthService.VerifyGoogleTokenAsync(googleLoginDto.IdToken?? throw new ArgumentNullException(nameof(googleLoginDto.IdToken)));
+            if (!success || string.IsNullOrEmpty(email))
+            {
+                throw new UnauthorizedAccessException("Invalid Google token.");
+            }
+
+            // Check if user exists
+            var user = await _userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                // Register new user
+                user = new User
+                {
+                    FirstName = name ?? email.Split('@')[0],
+                    LastName = name ?? email.Split('@')[0],
+                    Email = email,
+                    Role = "Student", // Default role for new users
+                    CreatedAt = DateTime.UtcNow
+                };
+                await _userRepository.AddAsync(user);
+            }
+
+            // Generate tokens
             var accessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(15));
             var refreshToken = GenerateRefreshToken();
             await _userRepository.StoreRefreshTokenAsync(user.Id, refreshToken, DateTime.UtcNow.AddDays(7));
@@ -90,7 +129,7 @@ namespace Application.Services
             };
         }
 
-        private string GenerateRefreshToken()
+        public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
             using var rng = RandomNumberGenerator.Create();

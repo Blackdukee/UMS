@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  user-management-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      # Override the database connection string as needed for your environment
+      # - ConnectionStrings__DefaultConnection=Server=localhost\SQLEXPRESS;Database=UserManagementSystemDB;User Id=sa;Password=Rot@2112002;Trusted_Connection=True;TrustServerCertificate=True;
+      #   - SMTP__HOST=smtp.gmail.com
+      # - SMTP__PORT=587
+      # - SMTP__USERNAME=mahd.app.io@gmail.com
+      # - SMTP__PASSWORD=tmal qpjl eann dynn
+      # - SMTP__FROM=mahd.app.io@gmail.com
+    restart: always
+    networks:
+      - e-learning-network
+
+  sqlserver-express:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: "sqlserver-express"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Rot@2112002
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    networks:
+      e-learning-network:
+        aliases:
+          - "localhost\\SQLEXPRESS"
+
+volumes:
+  sqlserverdata:
+
+networks:
+  e-learning-network:
+    external: true
+      

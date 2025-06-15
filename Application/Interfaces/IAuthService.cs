@@ -9,5 +9,6 @@ namespace Application.Interfaces
         Task<string> RegisterAsync(RegisterDto dto);
         Task<LoginResponseDto> LoginAsync(LoginDto loginDto);
         Task<LoginResponseDto> RefreshTokenAsync(string refreshToken);
+        Task<LoginResponseDto> LoginWithGoogleAsync(GoogleLoginDto idToken);
     }
 }

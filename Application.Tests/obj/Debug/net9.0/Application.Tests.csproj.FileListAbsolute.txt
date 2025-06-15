@@ -128,3 +128,6 @@ C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Application.Tests\o
 C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Application.Tests\obj\Debug\net9.0\Application.Tests.pdb
 C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Application.Tests\obj\Debug\net9.0\Application.Tests.genruntimeconfig.cache
 C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Application.Tests\obj\Debug\net9.0\ref\Application.Tests.dll
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Application.Tests\obj\Debug\net9.0\Application.Tests.dll
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Application.Tests\obj\Debug\net9.0\refint\Application.Tests.dll
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Application.Tests\obj\Debug\net9.0\Application.Tests.pdb

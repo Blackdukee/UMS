@@ -12,6 +12,34 @@ namespace Utilities.Security
     {
         private static readonly string SecretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? "X7kP9mQ2vL5jR8yT3wZ6nB4xC1uF8hJ9kLmP3qW4rT6yU8iO9pX2vC5mN7bV1j";
 
+        public static (bool isValid, ClaimsPrincipal? claimsPrincipal) ValidateToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(SecretKey);
+            
+            try
+            {
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? "http://localhost:5003",
+                    ValidateAudience = true,
+                    ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? "http://localhost:5003",
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+
+                var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
+                return (true, claimsPrincipal);
+            }
+            catch
+            {
+                return (false, null);
+            }
+        }
+
         public static string GenerateToken(int userId, string email, string role, TimeSpan expiration)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));

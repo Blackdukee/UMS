@@ -1,9 +1,0 @@
-2025-06-13 15:49:53.841 +03:00 [INF] Skipping JWT validation for internal service communication: /api/v1/ums/auth/validate
-2025-06-13 15:50:27.901 +03:00 [INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/login
-2025-06-13 15:51:00.267 +03:00 [INF] Skipping JWT validation for internal service communication: /api/v1/ums/auth/validate
-2025-06-13 16:02:48.608 +03:00 [INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/refresh-token
-2025-06-13 16:03:42.040 +03:00 [INF] Skipping JWT validation for internal service communication: /api/v1/ums/auth/validate
-2025-06-13 16:03:49.880 +03:00 [INF] Skipping JWT validation for internal service communication: /api/v1/ums/auth/validate
-2025-06-13 16:10:04.366 +03:00 [INF] Skipping JWT validation for internal service communication: /api/v1/ums/auth/validate
-2025-06-13 16:11:43.806 +03:00 [INF] Skipping JWT validation for internal service communication: /api/v1/ums/auth/validate
-[16:21:52 INF] Skipping JWT validation for service with valid X-Service-Key: /api/v1/ums/auth/validate

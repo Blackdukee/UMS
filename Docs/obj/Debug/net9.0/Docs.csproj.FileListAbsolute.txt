@@ -9,3 +9,15 @@ C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Docs\obj\Debug\net9
 C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Docs\obj\Debug\net9.0\refint\Docs.dll
 C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Docs\obj\Debug\net9.0\Docs.pdb
 C:\SeniorYear\.Net\C#_tasks\CS_Projects\UserManagementSystem\Docs\obj\Debug\net9.0\ref\Docs.dll
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\bin\Debug\net9.0\Docs.deps.json
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\bin\Debug\net9.0\Docs.dll
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\bin\Debug\net9.0\Docs.pdb
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\Docs.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\Docs.AssemblyInfoInputs.cache
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\Docs.AssemblyInfo.cs
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\Docs.csproj.CoreCompileInputs.cache
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\Docs.sourcelink.json
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\Docs.dll
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\refint\Docs.dll
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\Docs.pdb
+c:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Docs\obj\Debug\net9.0\ref\Docs.dll

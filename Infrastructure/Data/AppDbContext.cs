@@ -13,6 +13,7 @@ namespace Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserSettings> UserSettings { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
