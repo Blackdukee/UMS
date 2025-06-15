@@ -25,9 +25,9 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/UMS:latest \
-                       -t ${{ secrets.DOCKERHUB_USERNAME }}/UMS:${{ env.TIMESTAMP }} .
-          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/UMS
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ums:latest \
+                       -t ${{ secrets.DOCKERHUB_USERNAME }}/ums:${{ env.TIMESTAMP }} .
+          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/ums
 
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -37,6 +37,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /home/ubuntu/elearning-backend/UMS
+            cd /home/ubuntu/elearning-backend/ums
             chmod +x deploy.sh
             ./deploy.sh
