@@ -22,7 +22,13 @@ using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Environment.EnvironmentName = "Development";
+builder.Environment.EnvironmentName = "Production"; // Set environment to Production
+
+
+// override URLs
+builder.WebHost.UseUrls("http://0.0.0.0:5003");
+
+
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
