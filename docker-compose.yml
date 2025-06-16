@@ -1,7 +1,7 @@
 services:
   user-management-api:
     build:
-      context: .
+      context: ./ums 
       dockerfile: Dockerfile
     ports:
       - "5003:5003"
