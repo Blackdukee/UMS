@@ -121,9 +121,10 @@ namespace UserManagementAPI.Middlewares
         public async Task InvokeAsync(HttpContext context)
         {
 
-            if (context.Request.Path.StartsWithSegments("/api/v1/swagger"))
+            if (context.Request.Path.StartsWithSegments("/swagger"))
             {
                 // Skip JWT validation for these paths
+
                 await _next(context);
                 return;
             }
