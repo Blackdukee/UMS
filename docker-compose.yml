@@ -1,5 +1,5 @@
 services:
-  ums-api:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
