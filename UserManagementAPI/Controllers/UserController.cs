@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.DTOs;
+using Azure;
+using Microsoft.Extensions.Logging;
 
 namespace UserManagementAPI.Controllers
 {
@@ -15,9 +17,12 @@ namespace UserManagementAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IEmailService _emailService;
+        
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService, IEmailService emailService)
+        public UserController(IUserService userService, IEmailService emailService, ILogger<UserController> logger)
         {
+            _logger = logger;
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
@@ -33,8 +38,10 @@ namespace UserManagementAPI.Controllers
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile(CancellationToken cancellationToken)
         {
+            _logger.LogInformation("GetProfile called by user with ID: {UserId}", User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (!TryGetUserId(out int userId))
             {
+                _logger.LogWarning("User ID is missing or invalid.");
                 return Unauthorized("User ID is missing or invalid.");
             }
 
