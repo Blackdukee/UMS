@@ -25,14 +25,18 @@ namespace UserManagementAPI.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
         private readonly IMemoryCache _memoryCache;
+        private readonly IUserService _userService;
 
-        public AuthController(IAuthService authService, IUserRepository userRepository, IEmailService emailService, IMemoryCache memoryCache, IGoogleAuthService googleAuthService)
+
+        public AuthController(IAuthService authService, IUserService userService, IUserRepository userRepository, IEmailService emailService, IMemoryCache memoryCache, IGoogleAuthService googleAuthService)
         {
             _authService = authService;
             _userRepository = userRepository;
             _emailService = emailService;
             _memoryCache = memoryCache;
             _googleAuthService = googleAuthService;
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+
         }
 
         // Add this to your AuthController.cs file
@@ -123,35 +127,37 @@ namespace UserManagementAPI.Controllers
                 return Ok(new TokenValidationResponse { Valid = false });
             }
         }
+        private bool TryGetUserId(out int userId)
+        {
+            userId = 0;
+            string? userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return !string.IsNullOrEmpty(userIdStr) && int.TryParse(userIdStr, out userId);
+        }
 
         [HttpPost("forgot-password")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        [AllowAnonymous] // Allow unauthenticated access for this endpoint
+        public async Task<IActionResult> ForgotPassword()
         {
-            var user = await _userRepository.GetByEmailAsync(request.Email);
-            if (user == null)
+            if (!TryGetUserId(out int userId))
             {
-                return BadRequest(new { error = "Email is not registered" });
+                return Unauthorized("User ID is missing or invalid.");
             }
 
-            var otp = GenerateSecureOtp();
-            var cacheEntryOptions = new MemoryCacheEntryOptions
+            var userProfile = await _userService.GetUserProfileAsync(userId, CancellationToken.None);
+            if (userProfile == null || string.IsNullOrEmpty(userProfile.Email))
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-            };
-            _memoryCache.Set($"OTP_{request.Email}", new OtpData { Otp = otp, UserId = user.Id }, cacheEntryOptions);
-
-            try
-            {
-                await _emailService.SendEmailAsync(user.Email, "Password Reset Code",
-                    $"Your OTP is: <b>{otp}</b>. It will expire in 10 minutes.");
-            }
-            catch
-            {
-                return StatusCode(500, new { error = "Failed to send email. Please try again later." });
+                return BadRequest("User email not found.");
             }
 
-            return Ok(new { message = "OTP has been sent to your email" });
+            string otp = GenerateSecureOtp();
+
+            await _userService.StoreOtpAsync(userId, otp);
+
+            string subject = "Password Reset OTP";
+            string body = $"Your OTP for password reset is: <strong>{otp}</strong>. It is valid for 10 minutes.";
+            await _emailService.SendEmailAsync(userProfile.Email, subject, body);
+
+            return Ok(new { message = "OTP sent to your email. Check your inbox." });
         }
 
         [HttpPost("reset-password")]

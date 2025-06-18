@@ -91,35 +91,5 @@ namespace UserManagementAPI.Controllers
             return Ok(new { message = "Account deleted successfully." });
         }
 
-        [HttpPost("forgot-password")]
-        [AllowAnonymous] // Allow unauthenticated access for this endpoint
-        public async Task<IActionResult> ForgotPassword()
-        {
-            if (!TryGetUserId(out int userId))
-            {
-                return Unauthorized("User ID is missing or invalid.");
-            }
-
-            var userProfile = await _userService.GetUserProfileAsync(userId, CancellationToken.None);
-            if (userProfile == null || string.IsNullOrEmpty(userProfile.Email))
-            {
-                return BadRequest("User email not found.");
-            }
-
-            string otp = GenerateOtp();
-            await _userService.StoreOtpAsync(userId, otp);
-
-            string subject = "Password Reset OTP";
-            string body = $"Your OTP for password reset is: <strong>{otp}</strong>. It is valid for 10 minutes.";
-            await _emailService.SendEmailAsync(userProfile.Email, subject, body);
-
-            return Ok(new { message = "OTP sent to your email. Check your inbox." });
-        }
-
-        private string GenerateOtp()
-        {
-            Random random = new Random();
-            return random.Next(100000, 999999).ToString(); 
-        }
     }
 }
