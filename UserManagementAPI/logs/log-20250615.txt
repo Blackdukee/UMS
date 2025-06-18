@@ -1,9 +1,0 @@
-[16:17:06 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/google-login
-[16:17:07 ERR] Error validating Google token
-Google.Apis.Auth.InvalidJwtException: JWT must consist of Header, Payload, and Signature
-   at Google.Apis.Auth.SignedToken`2.FromSignedToken(String signedToken)
-   at Google.Apis.Auth.GoogleJsonWebSignature.ValidateInternalAsync(String jwt, ValidationSettings validationSettings)
-   at Application.Services.GoogleAuthService.VerifyGoogleTokenAsync(String idToken) in C:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Application\Services\GoogleAuthService.cs:line 30
-[16:17:21 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/google-login
-[16:17:27 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/google-login
-[16:17:55 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/google-login

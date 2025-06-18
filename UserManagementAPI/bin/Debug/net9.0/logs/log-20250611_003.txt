@@ -1,4 +1,0 @@
-2025-06-11 19:02:48.606 +03:00 [ERR] Failed executing DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
-CREATE DATABASE [UserManagementSystemDB];
-[19:08:37 ERR] Failed executing DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
-CREATE DATABASE [UserManagementSystemDB];

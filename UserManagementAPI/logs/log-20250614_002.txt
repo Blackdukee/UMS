@@ -1,4 +1,0 @@
-2025-06-14 18:29:52.160 +03:00 [INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/google-login
-2025-06-14 18:32:27.492 +03:00 [INF] Skipping JWT validation for service with valid X-Service-Key: /api/v1/ums/user/profile
-2025-06-14 18:32:27.531 +03:00 [INF] Retrieving profile for user 4
-2025-06-14 18:32:27.808 +03:00 [INF] Successfully retrieved profile for user 4

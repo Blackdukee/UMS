@@ -125,6 +125,7 @@ namespace UserManagementAPI.Controllers
         }
 
         [HttpPost("forgot-password")]
+        [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
             var user = await _userRepository.GetByEmailAsync(request.Email);

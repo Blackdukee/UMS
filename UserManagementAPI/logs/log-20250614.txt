@@ -1,6 +1,0 @@
-[18:26:57 INF] Skipping JWT validation for Auth endpoint: /api/v1/ums/auth/google-login
-[18:26:59 ERR] Error validating Google token
-Google.Apis.Auth.InvalidJwtException: JWT contains untrusted 'aud' claim.
-   at Google.Apis.Auth.SignedTokenVerification.VerifySignedTokenAsync[TJswHeader,TJswPayload](SignedToken`2 signedToken, SignedTokenVerificationOptions options, CancellationToken cancellationToken)
-   at Google.Apis.Auth.GoogleJsonWebSignature.ValidateInternalAsync(String jwt, ValidationSettings validationSettings)
-   at Application.Services.GoogleAuthService.VerifyGoogleTokenAsync(String idToken) in C:\Users\Brilliant\Desktop\UMS\UserManagmentAPI_MAHD_System\Application\Services\GoogleAuthService.cs:line 30
