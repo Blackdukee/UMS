@@ -196,7 +196,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseIpRateLimiting();
 app.UseMiddleware<UserManagementAPI.Middlewares.ErrorHandlingMiddleware>();
-app.UseApiKey();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<UserManagementAPI.Middlewares.JwtTokenValidationMiddleware>();
