@@ -92,6 +92,7 @@ namespace UserManagementAPI.Controllers
         }
 
         [HttpPost("forgot-password")]
+        [AllowAnonymous] // Allow unauthenticated access for this endpoint
         public async Task<IActionResult> ForgotPassword()
         {
             if (!TryGetUserId(out int userId))
