@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using UserManagementAPI.Models;
 using Utilities.Security;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity.Data;
 
 
 namespace UserManagementAPI.Controllers
@@ -127,31 +128,26 @@ namespace UserManagementAPI.Controllers
                 return Ok(new TokenValidationResponse { Valid = false });
             }
         }
-        private bool TryGetUserId(out int userId)
-        {
-            userId = 0;
-            string? userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return !string.IsNullOrEmpty(userIdStr) && int.TryParse(userIdStr, out userId);
-        }
+  
 
         [HttpPost("forgot-password")]
         [AllowAnonymous] // Allow unauthenticated access for this endpoint
-        public async Task<IActionResult> ForgotPassword()
-        {
-            if (!TryGetUserId(out int userId))
-            {
-                return Unauthorized("User ID is missing or invalid.");
-            }
+        public async Task<IActionResult> ForgotPassword([FromBody] Application.DTOs.ForgotPasswordRequest request)
+        {   
+          
 
-            var userProfile = await _userService.GetUserProfileAsync(userId, CancellationToken.None);
-            if (userProfile == null || string.IsNullOrEmpty(userProfile.Email))
+            if (request.Email == null || string.IsNullOrEmpty(request.Email))
             {
                 return BadRequest("User email not found.");
             }
-
+            var userProfile = await _userRepository.GetByEmailAsync(request.Email);
+            if (userProfile == null)
+            {
+                return BadRequest("User not found.");
+            }   
             string otp = GenerateSecureOtp();
 
-            await _userService.StoreOtpAsync(userId, otp);
+            await _userService.StoreOtpAsync(userProfile.Id, otp);
 
             string subject = "Password Reset OTP";
             string body = $"Your OTP for password reset is: <strong>{otp}</strong>. It is valid for 10 minutes.";
@@ -239,7 +235,7 @@ namespace UserManagementAPI.Controllers
     }
     public class GoogleLoginRequest
     {
-        public string IdToken { get; set; }
+        public string? IdToken { get; set; }
     }
 
 
