@@ -57,5 +57,6 @@ namespace Application.Interfaces
         /// <returns>True if the role update succeeded; otherwise, false.</returns>
         Task<bool> SetUserRoleAsync(int userId, string role, CancellationToken cancellationToken = default);
         Task StoreOtpAsync(int userId, string otp);
+        Task<bool> ResetPasswordAsync(ResetPasswordRequest request);
     }
 }

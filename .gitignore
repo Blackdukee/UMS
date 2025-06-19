@@ -2,6 +2,8 @@
 [Bb]in/
 [Oo]bj/
 
+
+
 # User-specific files
 *.user
 *.suo
@@ -35,3 +37,17 @@ artifacts/
 # Other system files
 *.DS_Store
 Thumbs.db
+
+
+# Ignore build output
+[Bb]in/
+[Oo]bj/
+
+# Ignore log files
+[Ll]ogs/
+*.log
+
+# Ignore user-specific files
+*.user
+*.suo
+

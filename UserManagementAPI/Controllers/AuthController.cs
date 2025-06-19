@@ -135,7 +135,6 @@ namespace UserManagementAPI.Controllers
         public async Task<IActionResult> ForgotPassword([FromBody] Application.DTOs.ForgotPasswordRequest request)
         {   
           
-
             if (request.Email == null || string.IsNullOrEmpty(request.Email))
             {
                 return BadRequest("User email not found.");
@@ -157,22 +156,16 @@ namespace UserManagementAPI.Controllers
         }
 
         [HttpPost("reset-password")]
+        [AllowAnonymous] // Allow unauthenticated access for consistency
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
-            if (!_memoryCache.TryGetValue($"OTP_{request.Email}", out OtpData? otpData) || otpData == null || otpData.Otp != request.Otp)
-            {
-                return BadRequest(new { error = "Invalid or expired OTP" });
-            }
+            // Logic is now encapsulated in the user service to match ForgotPassword
+            var success = await _userService.ResetPasswordAsync(request);
 
-            var user = await _userRepository.GetByIdAsync(otpData.UserId);
-            if (user == null)
+            if (!success)
             {
-                return BadRequest(new { error = "User not found" });
+                return BadRequest(new { error = "Invalid or expired OTP." });
             }
-
-            user.PasswordHash = Utilities.Security.PasswordHelper.HashPassword(request.NewPassword);
-            await _userRepository.UpdateAsync(user);
-            _memoryCache.Remove($"OTP_{request.Email}");
 
             return Ok(new { message = "Password has been updated successfully" });
         }

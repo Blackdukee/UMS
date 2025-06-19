@@ -108,5 +108,33 @@ namespace Application.Services
             await _userRepository.UpdateAsync(user, cancellationToken);
             return true;
         }
+
+        public async Task<bool> ResetPasswordAsync(ResetPasswordRequest request)
+        {
+            var user = await _userRepository.GetByEmailAsync(request.Email);
+            if (user == null)
+            {
+                _logger.LogWarning("Attempted to reset password for non-existent email: {Email}", request.Email);
+                return false;
+            }
+
+            // OTP is stored with UserId as the key
+            var otpKey = $"Otp_{user.Id}";
+            if (!_cache.TryGetValue(otpKey, out string? cachedOtp) || cachedOtp != request.Otp)
+            {
+                _logger.LogWarning("Invalid or expired OTP for user {UserId}", user.Id);
+                return false;
+            }
+
+            // OTP is valid, proceed with password reset
+            user.PasswordHash = PasswordHelper.HashPassword(request.NewPassword);
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _userRepository.UpdateAsync(user);
+            _cache.Remove(otpKey); // Clean up the used OTP
+
+            _logger.LogInformation("Password successfully reset for user {UserId}", user.Id);
+            return true;
+        }
     }
 }
