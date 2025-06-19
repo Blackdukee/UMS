@@ -1,53 +1,66 @@
-# Build Folders (you can keep bin if you'd like to check in compiled binaries)
-[Bb]in/
-[Oo]bj/
-
-
-
 # User-specific files
-*.user
 *.suo
+*.user
 *.userosscache
 *.sln.docstates
 
-# Auto-generated files
-Generated\ Files/
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
 
-# MSTest test Results
-TestResults/
-*.trx
-
-# NuGet Packages
-*.nupkg
-# Uncomment if necessary to ignore packages folder
-# packages/
-
-# Dotnet Core
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
-# VS Code
+# Visual Studio cache files
+.vs/
 .vscode/
+*.csproj.user
+*.vbproj.user
+*.sln.ide
 
 # Rider
 .idea/
-*.sln.iml
 
-# Other system files
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+*.dotcover
+*.resharper
+
+# Local secrets and environment-specific settings
+# Often, developers want to keep local development settings out of source control.
+# If you want to track appsettings.Development.json, remove the line below.
+appsettings.Development.json
+secrets.json
+
+# Tooling
+_ReSharper*/
+*.[Rr]e[Ss]harper
 *.DS_Store
-Thumbs.db
 
+# Project files
+project.lock.json
+project.fragment.lock.json
 
-# Ignore build output
-[Bb]in/
-[Oo]bj/
+# Packages
+/packages
+*.nupkg
 
-# Ignore log files
-[Ll]ogs/
-*.log
-
-# Ignore user-specific files
-*.user
-*.suo
-
+# Others
+*.dbmdl
+*.jfm
+*.pfx
+*.publishsettings
+node_modules/
+npm
