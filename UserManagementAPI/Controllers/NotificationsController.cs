@@ -26,86 +26,52 @@ namespace UserManagementAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> ProcessNotification([FromBody] NotificationRequest request)
         {
+            _logger.LogInformation("Processing notification request: {Request}", request.AdditionalData);
             try
             {
-                _logger.LogInformation("Received notification: {Action} for user {UserId}", request.Action, request.UserId); switch (request.Action)
+                int parsedUserId = int.TryParse(request.UserId, out int userId) ? userId : 0;
+
+
+                _logger.LogInformation("Received notification: {Action} for user {UserId}", request.Action, request.UserId);
+                switch (request.Action)
                 {
+                    // parsing userid to int 
+
+
                     case "ENROLL_USER":
                         if (string.IsNullOrEmpty(request.CourseId) || string.IsNullOrEmpty(request.TransactionId))
                         {
-                            return BadRequest(new NotificationResponse
-                            {
-                                Success = false,
-                                Message = "CourseId and TransactionId are required for ENROLL_USER action"
-                            });
+                            return BadRequest(new { Success = false, Message = "CourseId and TransactionId are required." });
                         }
-
-                        await _notificationService.ProcessEnrollUserNotificationAsync(
-                            request.UserId,
-                            request.CourseId,
-                            request.TransactionId);
+                        await _notificationService.ProcessEnrollUserNotificationAsync(parsedUserId, request.CourseId, request.TransactionId);
                         break;
 
                     case "NEW_EARNINGS":
-                        if (request.Data == null || string.IsNullOrEmpty(request.Data.CourseId) ||
-                            string.IsNullOrEmpty(request.Data.TransactionId) || !request.Data.Amount.HasValue)
+                        if (string.IsNullOrEmpty(request.CourseId) || string.IsNullOrEmpty(request.TransactionId) || !request.Amount.HasValue)
                         {
-                            return BadRequest(new NotificationResponse
-                            {
-                                Success = false,
-                                Message = "Missing required data for NEW_EARNINGS action"
-                            });
+                            return BadRequest(new { Success = false, Message = "CourseId, TransactionId, and Amount are required." });
                         }
-
-                        await _notificationService.ProcessNewEarningsNotificationAsync(
-                            request.UserId,
-                            request.Data.CourseId,
-                            request.Data.TransactionId,
-                            request.Data.Amount.Value,
-                            request.Data.TotalPendingEarnings ?? 0);
+                        await _notificationService.ProcessNewEarningsNotificationAsync(parsedUserId, request.CourseId, request.TransactionId, request.Amount.Value, request.TotalPendingEarnings ?? 0);
                         break;
-                    case "EARNINGS_REFUNDED":
-                        if (request.Data == null || string.IsNullOrEmpty(request.Data.CourseId) ||
-                            string.IsNullOrEmpty(request.Data.TransactionId) || !request.Data.Amount.HasValue ||
-                            string.IsNullOrEmpty(request.Data.Reason))
-                        {
-                            return BadRequest(new NotificationResponse
-                            {
-                                Success = false,
-                                Message = "Missing required data for EARNINGS_REFUNDED action"
-                            });
-                        }
 
-                        await _notificationService.ProcessEarningsRefundedNotificationAsync(
-                            request.UserId,
-                            request.Data.CourseId,
-                            request.Data.TransactionId,
-                            request.Data.Amount.Value,
-                            request.Data.Reason);
+                    case "EARNINGS_REFUNDED":
+                        if (string.IsNullOrEmpty(request.CourseId) || string.IsNullOrEmpty(request.TransactionId) || !request.Amount.HasValue || string.IsNullOrEmpty(request.Reason))
+                        {
+                            return BadRequest(new { Success = false, Message = "CourseId, TransactionId, Amount, and Reason are required." });
+                        }
+                        await _notificationService.ProcessEarningsRefundedNotificationAsync(parsedUserId, request.CourseId, request.TransactionId, request.Amount.Value, request.Reason);
                         break;
 
                     case "REMOVE_ENROLLMENT":
                         if (string.IsNullOrEmpty(request.CourseId) || string.IsNullOrEmpty(request.TransactionId))
                         {
-                            return BadRequest(new NotificationResponse
-                            {
-                                Success = false,
-                                Message = "CourseId and TransactionId are required for REMOVE_ENROLLMENT action"
-                            });
+                            return BadRequest(new { Success = false, Message = "CourseId and TransactionId are required." });
                         }
-
-                        await _notificationService.ProcessRemoveEnrollmentNotificationAsync(
-                            request.UserId,
-                            request.CourseId,
-                            request.TransactionId);
+                        await _notificationService.ProcessRemoveEnrollmentNotificationAsync(parsedUserId, request.CourseId, request.TransactionId);
                         break;
 
                     default:
-                        return BadRequest(new NotificationResponse
-                        {
-                            Success = false,
-                            Message = $"Unknown action type: {request.Action}"
-                        });
+                        return BadRequest(new { Success = false, Message = $"Unknown action type: {request.Action}" });
                 }
 
                 return Ok(new NotificationResponse { Success = true, Message = "Notification processed successfully" });

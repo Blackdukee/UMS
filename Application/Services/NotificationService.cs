@@ -149,7 +149,8 @@ namespace Application.Services
                 _logger.LogError(ex, "Error processing enrollment removal notification for user {UserId}", userId);
                 throw;
             }
-        }        public async Task<bool> SendNotificationAsync(int userId, string title, string message, string type, string? additionalData = null)
+        }
+        public async Task<bool> SendNotificationAsync(int userId, string title, string message, string type, string? additionalData = null)
         {
             try
             {
@@ -166,7 +167,7 @@ namespace Application.Services
                 string userRole = user.Role?.Trim() ?? "";
                 if (string.Equals(userRole, "Educator", StringComparison.OrdinalIgnoreCase))
                 {
-                    _logger.LogInformation("User {UserId} identified as Educator, saving to database", userId);                    var notification = new Notification
+                    _logger.LogInformation("User {UserId} identified as Educator, saving to database", userId); var notification = new Notification
                     {
                         UserId = userId,
                         Title = title,
@@ -174,12 +175,12 @@ namespace Application.Services
                         Type = type,
                         CreatedAt = DateTime.UtcNow,
                         IsRead = false,
-                        RelatedEntityId = type == "REFUND" || type == "EARNINGS" || type == "ENROLLMENT" || type == "ENROLLMENT_REMOVAL" ? 
-                            message.Contains("course") ? 
+                        RelatedEntityId = type == "REFUND" || type == "EARNINGS" || type == "ENROLLMENT" || type == "ENROLLMENT_REMOVAL" ?
+                            message.Contains("course") ?
                                 message.Split("course")[1].Split('.')[0].Trim() : null : null,
                         AdditionalData = additionalData
                     };
-                    
+
                     await _notificationRepository.AddAsync(notification);
                     _logger.LogInformation("DB Notification saved for educator {UserId}: {Title}", userId, title);
                 }
@@ -190,7 +191,7 @@ namespace Application.Services
                     await _emailService.SendEmailAsync(user.Email, title, message);
                     _logger.LogInformation("Email notification sent to user {UserId}: {Title}", userId, title);
                 }
-                
+
                 return true;
             }
             catch (Exception ex)

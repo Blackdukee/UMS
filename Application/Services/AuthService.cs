@@ -53,7 +53,7 @@ namespace Application.Services
                 throw new UnauthorizedAccessException("Invalid credentials. Please check your email or password.");
             }
 
-            var accessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(60));
+            var accessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(1420));
             var refreshToken = GenerateRefreshToken();
             await _userRepository.StoreRefreshTokenAsync(user.Id, refreshToken, DateTime.UtcNow.AddDays(7));
 
@@ -90,7 +90,7 @@ namespace Application.Services
             }
 
             // Generate tokens
-            var accessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(60));
+            var accessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(1420));
             var refreshToken = GenerateRefreshToken();
             await _userRepository.StoreRefreshTokenAsync(user.Id, refreshToken, DateTime.UtcNow.AddDays(7));
 
@@ -118,7 +118,7 @@ namespace Application.Services
             var user = await _userRepository.GetByIdAsync(userId) ?? throw new SecurityTokenException("User not found");
 
             // Generate new tokens
-            var newAccessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(60));
+            var newAccessToken = JwtHelper.GenerateToken(user.Id, user.Email, user.Role, TimeSpan.FromMinutes(1420));
             var newRefreshToken = GenerateRefreshToken();
             await _userRepository.StoreRefreshTokenAsync(userId, newRefreshToken, DateTime.UtcNow.AddDays(7));
 
