@@ -2,6 +2,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 5003
+# Install required packages for database connectivity
+RUN apt-get update && apt-get install -y libkrb5-3 && rm -rf /var/lib/apt/lists/*
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
@@ -18,10 +20,9 @@ RUN dotnet publish "UserManagementAPI.csproj" -c Release -o /app/publish /p:UseA
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-# Ensure the app listens on port 80
+# Ensure the app listens on port 5003
 ENV ASPNETCORE_URLS=http://0.0.0.0:5003
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENTRYPOINT ["dotnet", "UserManagementAPI.dll"]
-RUN apt-get update && apt-get install -y libkrb5-3
 
 

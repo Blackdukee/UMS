@@ -156,19 +156,27 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Initialize database
+// Initialize database and apply migrations
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
+        
+        // Apply any pending migrations automatically
+        Console.WriteLine("Applying database migrations...");
+        context.Database.Migrate();
+        Console.WriteLine("Database migrations applied successfully.");
+        
+        // Initialize database with seed data
         DbInitializer.Initialize(context);
         Console.WriteLine("Database initialization completed.");
     }
     catch (Exception ex)
     {
         Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
+        Console.WriteLine($"Stack trace: {ex.StackTrace}");
     }
 }
 
