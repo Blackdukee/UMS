@@ -94,7 +94,7 @@ namespace Application.Services
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync(CancellationToken cancellationToken = default)
         {
             var users = await _userRepository.GetAllUsersAsync(cancellationToken);
-            return users.Select(u => new UserDto(u.Id, u.Email, u.Role));
+            return users.Select(u => new UserDto(u.Id, u.Email, u.Role, u.IsActive));
         }
 
         public async Task<bool> SetUserRoleAsync(int userId, string role, CancellationToken cancellationToken = default)

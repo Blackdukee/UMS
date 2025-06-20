@@ -26,5 +26,8 @@ namespace Application.Interfaces
 
         // Unlocks or reactivates a suspended user account.
         Task<bool> UnlockUserAsync(int userId);
+
+        // Activates all existing users (utility method to fix migration issues)
+        Task<bool> ActivateAllExistingUsersAsync();
     }
 }

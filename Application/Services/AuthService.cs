@@ -30,15 +30,14 @@ namespace Application.Services
             if (existingUser != null)
             {
                 return "User already exists. Please log in or use a different email.";
-            }
-
-            var user = new User
+            }            var user = new User
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
                 PasswordHash = PasswordHelper.HashPassword(dto.Password),
                 Role = dto.Role,
+                IsActive = true, // Explicitly set to active
             };
 
             await _userRepository.AddAsync(user);
@@ -74,8 +73,7 @@ namespace Application.Services
             }
 
             // Check if user exists
-            var user = await _userRepository.GetByEmailAsync(email);
-            if (user == null)
+            var user = await _userRepository.GetByEmailAsync(email);            if (user == null)
             {
                 // Register new user
                 user = new User
@@ -84,6 +82,7 @@ namespace Application.Services
                     LastName = name ?? email.Split('@')[0],
                     Email = email,
                     Role = "Student", // Default role for new users
+                    IsActive = true, // Explicitly set to active
                     CreatedAt = DateTime.UtcNow
                 };
                 await _userRepository.AddAsync(user);

@@ -4,6 +4,7 @@
     public record UserDto(
         int Id,
         string Email,
-        string Role
+        string Role,
+        bool IsActive = true
     );
 }
