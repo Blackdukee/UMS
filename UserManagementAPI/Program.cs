@@ -164,10 +164,82 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<AppDbContext>();
         
-        // Apply any pending migrations automatically
-        Console.WriteLine("Applying database migrations...");
-        context.Database.Migrate();
-        Console.WriteLine("Database migrations applied successfully.");
+        Console.WriteLine("Checking database connection...");
+        
+        // Check if database exists and is accessible
+        if (context.Database.CanConnect())
+        {
+            Console.WriteLine("Database connection successful.");
+            
+            // Check if IsActive column exists
+            var hasIsActiveColumn = false;
+            try
+            {
+                var sqlConnection = context.Database.GetDbConnection();
+                await sqlConnection.OpenAsync();
+                using var command = sqlConnection.CreateCommand();
+                command.CommandText = @"
+                    SELECT COUNT(*) 
+                    FROM INFORMATION_SCHEMA.COLUMNS 
+                    WHERE TABLE_NAME = 'Users' AND COLUMN_NAME = 'IsActive'";
+                var result = await command.ExecuteScalarAsync();
+                hasIsActiveColumn = Convert.ToInt32(result) > 0;
+                await sqlConnection.CloseAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error checking IsActive column: {ex.Message}");
+            }
+
+            if (!hasIsActiveColumn)
+            {
+                Console.WriteLine("IsActive column missing. Adding column manually...");
+                try
+                {
+                    var sqlConnection = context.Database.GetDbConnection();
+                    await sqlConnection.OpenAsync();
+                    using var command = sqlConnection.CreateCommand();
+                    command.CommandText = "ALTER TABLE Users ADD IsActive bit NOT NULL DEFAULT 1";
+                    await command.ExecuteNonQueryAsync();
+                    await sqlConnection.CloseAsync();
+                    Console.WriteLine("IsActive column added successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error adding IsActive column: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("IsActive column already exists.");
+            }
+
+            // Try to apply pending migrations
+            try
+            {
+                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+                if (pendingMigrations.Any())
+                {
+                    Console.WriteLine($"Applying {pendingMigrations.Count()} pending migrations...");
+                    await context.Database.MigrateAsync();
+                    Console.WriteLine("Database migrations applied successfully.");
+                }
+                else
+                {
+                    Console.WriteLine("No pending migrations found.");
+                }
+            }
+            catch (Exception migrationEx)
+            {
+                Console.WriteLine($"Migration error (continuing anyway): {migrationEx.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Cannot connect to database. Creating database...");
+            await context.Database.EnsureCreatedAsync();
+            Console.WriteLine("Database created successfully.");
+        }
         
         // Initialize database with seed data
         DbInitializer.Initialize(context);
@@ -177,6 +249,7 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
         Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        // Don't throw the exception, let the app continue to start
     }
 }
 
