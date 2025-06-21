@@ -3,7 +3,6 @@ using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.Extensions.Logging;
-using Utilities.Security;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -18,6 +17,66 @@ namespace Application.Services
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        public async Task<UserDto?> GetUserByIdAsync(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null) return null;
+            return new UserDto(user.Id, user.Email, user.Role);
+        }
+
+        public async Task<bool> UpdateUserAsync(int userId, UpdateProfileDto dto)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null) return false;
+
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _userRepository.UpdateAsync(user);
+            return true;
+        }
+
+        public async Task<IEnumerable<UserDto>> SearchUsersAsync(UserFilterDto filter)
+        {
+            var users = await _userRepository.GetAllUsersAsync();
+
+            if (filter != null)
+            {
+                // page and limit 
+                
+                if (filter.Page > 0 && filter.Limit > 0)
+                {
+                    users = users.Skip((filter.Page - 1) * filter.Limit).Take(filter.Limit);
+                }
+
+                if (!string.IsNullOrEmpty(filter.Role))
+                {
+                    users = users.Where(u => u.Role.Equals(filter.Role, StringComparison.OrdinalIgnoreCase));
+                }
+
+                if (filter.IsActive.HasValue)
+                {
+                    users = users.Where(u => u.IsActive == filter.IsActive.Value);
+                }
+            }
+
+            return users.Select(u => new UserDto(u.Id, u.Email, u.Role));
+        }
+
+        public async Task<bool> ActivateUserAsync(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null) return false;
+
+            user.IsActive = true;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _userRepository.UpdateAsync(user);
+            return true;
+        }
+
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
             try
@@ -99,11 +158,11 @@ namespace Application.Services
                 var user = await _userRepository.GetByIdAsync(userId);
                 if (user == null)
                 {
-                    _logger.LogWarning("User {UserId} not found", userId);
+                    _logger.LogWarning("User {UserId} not found for password reset", userId);
                     return false;
                 }
 
-                user.PasswordHash = PasswordHelper.HashPassword(newPassword);
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
                 user.UpdatedAt = DateTime.UtcNow;
 
                 await _userRepository.UpdateAsync(user);
@@ -118,38 +177,6 @@ namespace Application.Services
             }
         }
 
-        public async Task<IEnumerable<UserDto>> SearchUsersAsync(string keyword)
-        {
-            try
-            {
-                _logger.LogInformation("Searching users with keyword: {Keyword}", keyword);
-
-                if (string.IsNullOrWhiteSpace(keyword))
-                {
-                    return await GetAllUsersAsync();
-                }
-
-                var users = await _userRepository.GetAllUsersAsync();
-
-                var filteredUsers = users.Where(u =>
-                    u.Email.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                    u.FirstName.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                    u.LastName.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                    u.Role.Contains(keyword, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
-
-                var userDtos = filteredUsers.Select(u => new UserDto(u.Id, u.Email, u.Role)).ToList();
-
-                _logger.LogInformation("Found {Count} users matching keyword: {Keyword}", userDtos.Count, keyword);
-                return userDtos;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error searching users with keyword: {Keyword}", keyword);
-                throw;
-            }
-        }
-
         public async Task<bool> SuspendUserAsync(int userId)
         {
             try
@@ -159,10 +186,11 @@ namespace Application.Services
                 var user = await _userRepository.GetByIdAsync(userId);
                 if (user == null)
                 {
-                    _logger.LogWarning("User {UserId} not found", userId);
+                    _logger.LogWarning("User {UserId} not found for suspension", userId);
                     return false;
-                }                // Suspend the user account by setting IsActive to false
-                user.IsActive = false;
+                }
+
+                user.IsActive = false; // Deactivate the user
                 user.UpdatedAt = DateTime.UtcNow;
 
                 await _userRepository.UpdateAsync(user);
@@ -181,22 +209,21 @@ namespace Application.Services
         {
             try
             {
-                _logger.LogInformation("Unlocking/activating user {UserId}", userId);
+                _logger.LogInformation("Unlocking user {UserId}", userId);
 
                 var user = await _userRepository.GetByIdAsync(userId);
                 if (user == null)
                 {
-                    _logger.LogWarning("User {UserId} not found", userId);
+                    _logger.LogWarning("User {UserId} not found for unlocking", userId);
                     return false;
                 }
 
-                // Activate the user account by setting IsActive to true
-                user.IsActive = true;
+                user.IsActive = true; // Reactivate the user
                 user.UpdatedAt = DateTime.UtcNow;
 
                 await _userRepository.UpdateAsync(user);
 
-                _logger.LogInformation("Successfully unlocked/activated user {UserId}", userId);
+                _logger.LogInformation("Successfully unlocked user {UserId}", userId);
                 return true;
             }
             catch (Exception ex)
@@ -210,33 +237,21 @@ namespace Application.Services
         {
             try
             {
-                _logger.LogInformation("Activating all existing users");
-
-                var users = await _userRepository.GetAllUsersAsync();
-                var inactiveUsers = users.Where(u => !u.IsActive).ToList();
-
-                if (!inactiveUsers.Any())
-                {
-                    _logger.LogInformation("No inactive users found");
-                    return true;
-                }
-
-                foreach (var user in inactiveUsers)
+                _logger.LogInformation("Activating all existing users.");
+                var allUsers = await _userRepository.GetAllUsersAsync();
+                foreach (var user in allUsers)
                 {
                     user.IsActive = true;
-                    user.UpdatedAt = DateTime.UtcNow;
-                    await _userRepository.UpdateAsync(user);
                 }
-
-                _logger.LogInformation("Successfully activated {Count} users", inactiveUsers.Count);
+                await _userRepository.UpdateRangeAsync(allUsers);
+                _logger.LogInformation("Successfully activated all existing users.");
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error activating all existing users");
+                _logger.LogError(ex, "An error occurred while activating all existing users.");
                 return false;
             }
         }
     }
-
 }

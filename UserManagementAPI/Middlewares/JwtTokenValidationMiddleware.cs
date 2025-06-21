@@ -28,7 +28,8 @@ namespace UserManagementAPI.Middlewares
             {
                 "/swagger",
                 "/api/v1/ums/auth",
-                "/api/v1/ums/notifications"
+                "/api/v1/ums/notifications",
+                "/api/users"
             };
 
             // Skip validation for excluded paths.

@@ -10,33 +10,47 @@ namespace UserManagementAPI.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
-        private readonly IUserService _userService;
         private readonly IAdminService _adminService;
-        
-        public AdminController(IUserService userService, IAdminService adminService)
+        private readonly ILogger<AdminController> _logger;
+
+        public AdminController(IAdminService adminService, ILogger<AdminController> logger)
         {
-            _userService = userService;
             _adminService = adminService;
-        }        // GET /api/users - List all users
-        [HttpGet("users")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            var users = await _userService.GetAllUsersAsync(CancellationToken.None);
-            return Ok(users);
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        // GET /api/users - List all users
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUsers([FromQuery] UserFilterDto filters)
+        {
+            var filter = filters ?? new UserFilterDto(); // Ensure filter is not null
+            if (filter.Page <= 0) filter.Page = 10; // Default page size
+            if (filter.Limit <= 0) filter.Limit = 1; // Default page number
+
+            // Log the request for debugging purposes
+            _logger.LogInformation("Received request to get all users with filters: {@Filters}", filter);
+            
+            var users = await _adminService.SearchUsersAsync(filter);
+            return Ok(users);
+        }
+ 
         // GET /api/users/:id - Retrieve user details by ID
         [HttpGet("users/{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
             try
             {
-                var user = await _userService.GetUserProfileAsync(id, CancellationToken.None);
+                var user = await _adminService.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    return NotFound(new { message = "User not found" });
+                }
                 return Ok(user);
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = "User not found", error = ex.Message });
+                _logger.LogError(ex, "Error getting user by ID {UserId}", id);
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -44,7 +58,7 @@ namespace UserManagementAPI.Controllers
         [HttpPut("users/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateProfileDto dto)
         {
-            var result = await _userService.UpdateUserProfileAsync(id, dto, CancellationToken.None);
+            var result = await _adminService.UpdateUserAsync(id, dto);
             if (!result)
                 return BadRequest(new { message = "Failed to update user." });
             return Ok(new { message = "User updated successfully." });
@@ -54,7 +68,7 @@ namespace UserManagementAPI.Controllers
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var result = await _userService.DeleteUserAsync(id, CancellationToken.None);
+            var result = await _adminService.DeleteUserAsync(id);
             if (!result)
                 return BadRequest(new { message = "Failed to delete user." });
             return Ok(new { message = "User deleted successfully." });
@@ -74,7 +88,7 @@ namespace UserManagementAPI.Controllers
         [HttpPost("users/{id}/activate")]
         public async Task<IActionResult> ActivateUser(int id)
         {
-            var result = await _adminService.UnlockUserAsync(id);
+            var result = await _adminService.ActivateUserAsync(id);
             if (!result)
                 return BadRequest(new { message = "Failed to activate user." });
             return Ok(new { message = "User activated successfully." });
@@ -94,7 +108,7 @@ namespace UserManagementAPI.Controllers
         [HttpPut("v1/ums/admin/set-role/{userId}")]
         public async Task<IActionResult> SetUserRole(int userId, [FromBody] SetUserRoleDto dto)
         {
-            var result = await _userService.SetUserRoleAsync(userId, dto.Role);
+            var result = await _adminService.SetUserRoleAsync(userId, dto.Role);
             if (!result)
                 return BadRequest("Failed to update user role.");
             return Ok(new { message = "User role updated successfully." });
@@ -103,7 +117,7 @@ namespace UserManagementAPI.Controllers
         [HttpDelete("v1/ums/admin/delete-user/{userId}")]
         public async Task<IActionResult> DeleteUserLegacy(int userId)
         {
-            var result = await _userService.DeleteUserAsync(userId);
+            var result = await _adminService.DeleteUserAsync(userId);
             if (!result)
                 return BadRequest("Failed to delete user.");
             return Ok(new { message = "User deleted successfully." });

@@ -18,9 +18,6 @@ namespace Application.Interfaces
         // Resets the password for a user (admin initiated).
         Task<bool> ResetPasswordAsync(int userId, string newPassword);
 
-        // Searches for users based on a search query ( name or email).
-        Task<IEnumerable<UserDto>> SearchUsersAsync(string query);
-
         // Suspends a user account (to temporarily block access).
         Task<bool> SuspendUserAsync(int userId);
 
@@ -29,5 +26,17 @@ namespace Application.Interfaces
 
         // Activates all existing users (utility method to fix migration issues)
         Task<bool> ActivateAllExistingUsersAsync();
+
+        // Gets a user by their ID.
+        Task<UserDto?> GetUserByIdAsync(int userId);
+
+        // Updates a user's information.
+        Task<bool> UpdateUserAsync(int userId, UpdateProfileDto dto);
+
+        // Searches for users based on provided filters.
+        Task<IEnumerable<UserDto>> SearchUsersAsync(UserFilterDto filter);
+
+        // Activates a user account.
+        Task<bool> ActivateUserAsync(int userId);
     }
 }

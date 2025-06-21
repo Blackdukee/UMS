@@ -1,5 +1,4 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,6 +43,12 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task UpdateRangeAsync(IEnumerable<User> users)
+        {
+            _context.Users.UpdateRange(users);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var user = await GetByIdAsync(id, cancellationToken);
@@ -56,6 +62,11 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<User>> GetAllUsersAsync(CancellationToken cancellationToken = default)
         {
             return await _context.Users.ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<User>> FindByConditionAsync(Expression<Func<User, bool>> expression)
+        {
+            return await _context.Users.Where(expression).ToListAsync();
         }
 
         public async Task StoreRefreshTokenAsync(int userId, string token, DateTime expiry)

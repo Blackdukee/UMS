@@ -20,7 +20,7 @@ using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Environment.EnvironmentName = "Production"; // Set environment to Production
+// builder.Environment.EnvironmentName = "Production"; // Set environment to Production
 
 
 // override URLs
@@ -280,7 +280,7 @@ app.UseIpRateLimiting();
 app.UseMiddleware<UserManagementAPI.Middlewares.ErrorHandlingMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<UserManagementAPI.Middlewares.JwtTokenValidationMiddleware>();
+app.UseJwtTokenValidation();
 app.MapControllers();
 
 Console.WriteLine("API is running on:");
