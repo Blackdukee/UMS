@@ -16,13 +16,11 @@ namespace Application.Services
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-
-        public async Task<UserDto?> GetUserByIdAsync(int userId)
+        }        public async Task<UserDto?> GetUserByIdAsync(int userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
             if (user == null) return null;
-            return new UserDto(user.Id, user.Email, user.Role);
+            return new UserDto(user.Id, user.Email, user.Role, user.IsActive);
         }
 
         public async Task<bool> UpdateUserAsync(int userId, UpdateProfileDto dto)
@@ -33,22 +31,21 @@ namespace Application.Services
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
             user.UpdatedAt = DateTime.UtcNow;
-
+    
             await _userRepository.UpdateAsync(user);
             return true;
-        }
-
-        public async Task<IEnumerable<UserDto>> SearchUsersAsync(UserFilterDto filter)
+        }        public async Task<IEnumerable<UserDto>> SearchUsersAsync(UserFilterDto filter)
         {
             var users = await _userRepository.GetAllUsersAsync();
 
             if (filter != null)
             {
-                // page and limit 
-                
-                if (filter.Page > 0 && filter.Limit > 0)
+                // Apply filters first, then pagination
+                if (!string.IsNullOrEmpty(filter.Query))
                 {
-                    users = users.Skip((filter.Page - 1) * filter.Limit).Take(filter.Limit);
+                    users = users.Where(u => u.Email.Contains(filter.Query, StringComparison.OrdinalIgnoreCase) ||
+                                             (u.FirstName != null && u.FirstName.Contains(filter.Query, StringComparison.OrdinalIgnoreCase)) ||
+                                             (u.LastName != null && u.LastName.Contains(filter.Query, StringComparison.OrdinalIgnoreCase)));
                 }
 
                 if (!string.IsNullOrEmpty(filter.Role))
@@ -60,9 +57,15 @@ namespace Application.Services
                 {
                     users = users.Where(u => u.IsActive == filter.IsActive.Value);
                 }
+
+                // Apply pagination after filtering
+                if (filter.Page > 0 && filter.Limit > 0)
+                {
+                    users = users.Skip((filter.Page - 1) * filter.Limit).Take(filter.Limit);
+                }
             }
 
-            return users.Select(u => new UserDto(u.Id, u.Email, u.Role));
+            return users.Select(u => new UserDto(u.Id, u.Email, u.Role, u.IsActive));
         }
 
         public async Task<bool> ActivateUserAsync(int userId)
@@ -84,7 +87,7 @@ namespace Application.Services
                 _logger.LogInformation("Retrieving all users");
                 var users = await _userRepository.GetAllUsersAsync();
 
-                var userDtos = users.Select(u => new UserDto(u.Id, u.Email, u.Role)).ToList();
+                var userDtos = users.Select(u => new UserDto(u.Id, u.Email, u.Role, u.IsActive)).ToList();
 
                 _logger.LogInformation("Successfully retrieved {Count} users", userDtos.Count);
                 return userDtos;

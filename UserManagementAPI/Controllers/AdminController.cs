@@ -19,13 +19,13 @@ namespace UserManagementAPI.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        // GET /api/users - List all users
-        [HttpGet("users")]
+        // GET /api/users - List all users     
+       [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers([FromQuery] UserFilterDto filters)
         {
             var filter = filters ?? new UserFilterDto(); // Ensure filter is not null
-            if (filter.Page <= 0) filter.Page = 10; // Default page size
-            if (filter.Limit <= 0) filter.Limit = 1; // Default page number
+            if (filter.Page <= 0) filter.Page = 1; // Default page number
+            if (filter.Limit <= 0) filter.Limit = 10; // Default page size
 
             // Log the request for debugging purposes
             _logger.LogInformation("Received request to get all users with filters: {@Filters}", filter);
